@@ -1,0 +1,15 @@
+services:
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - "8000:8000"
+
+  api:
+    build: .
+    ports:
+      - "8001:8001"
+    depends_on:
+      - dynamodb
+    environment:
+      - DYNAMODB_ENDPOINT=http://dynamodb:8000
+      - SIMULATED_FAILURE_RATE=${SIMULATED_FAILURE_RATE:-0.0}

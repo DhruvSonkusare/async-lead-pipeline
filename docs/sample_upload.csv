@@ -1,0 +1,9 @@
+name,email,message,city,company,phone
+Priya Sharma,priya.sharma@example.com,Ready to sign the contract today!,Mumbai,Sharma Textiles,9876543210
+Rohit Verma,rohit.verma@example.com,Can you send me more pricing info?,Bangalore,Verma Foods,9123456780
+Anjali Nair,anjali.nair@example.com,"Not interested right now, please remove me.",Chennai,Nair Exports,9988776655
+Karan Mehta,karan.mehta@example.com,Please remove me from your list.,Delhi,Mehta Logistics,9871234560
+Sara Iyer,sara.iyer@example.com,Just researching options for now.,Pune,,9001122334
+Priya Sharma,priya.sharma@example.com,Ready to sign the contract today!,Mumbai,Sharma Textiles,9876543210
+Sara Iyer,sara.iyer@example.com,"Actually - we're ready to move forward, send the contract.",Pune,,9001122334
+Missing Email Test,,This row has no email and should be marked invalid.,Kolkata,,9000000000
