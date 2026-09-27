@@ -70,7 +70,9 @@ class Settings:
         # PROCESSING
         # ====================================================================
         
-        self.MAX_LEADS_PER_REQUEST = 50000
+        # Spec caps this at 50,000 per upload - kept as the default; override
+        # via env var for local testing only, not for submission.
+        self.MAX_LEADS_PER_REQUEST = int(os.getenv("MAX_LEADS_PER_REQUEST", "50000"))
         self.BATCH_SIZE = 100  # how many leads between job-counter flushes
         self.CONCURRENT_WORKERS = 10  # bounded concurrency for ingestion
 
