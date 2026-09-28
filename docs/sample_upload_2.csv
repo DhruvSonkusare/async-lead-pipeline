@@ -1,0 +1,8 @@
+name,email,message,city,company,phone
+Arjun Malhotra,arjun.malhotra@example.com,We are ready to sign the deal this week!,Delhi,Malhotra Steel,9812345670
+Neha Kapoor,neha.kapoor@example.com,Could you share a detailed pricing sheet?,Hyderabad,Kapoor Retail,9823456781
+Vikram Rao,vikram.rao@example.com,"Please stop contacting me, not interested.",Kochi,Rao Logistics,9834567892
+Meera Pillai,meera.pillai@example.com,Still comparing a few vendors right now.,Jaipur,,9845678903
+Arjun Malhotra,arjun.malhotra@example.com,We are ready to sign the deal this week!,Delhi,Malhotra Steel,9812345670
+Meera Pillai,meera.pillai@example.com,"Okay, we've decided - let's go ahead and sign.",Jaipur,,9845678903
+No Email Row,,This lead has no email and should be flagged invalid.,Lucknow,,9000011111

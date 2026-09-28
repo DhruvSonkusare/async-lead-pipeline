@@ -281,19 +281,26 @@ class JobRepository:
         return response.get('Item')
 
     async def list_all(self, limit: int = 100, cursor: Optional[str] = None) -> Tuple[List[Dict], Optional[str]]:
-        """Every upload, most recent first - a Query against one partition, never a Scan."""
+        """
+        Every upload, most recent first - a Query against one partition,
+        never a Scan.
+
+        The sort key is job_id (a random UUID, needed so GET /jobs/{id}
+        stays an instant GetItem), not created_at - so DynamoDB's own key
+        order doesn't correspond to time at all. This page's items are
+        re-sorted by created_at here instead of trusting ScanIndexForward.
+        """
         table = await self._table()
         kwargs: Dict[str, Any] = {
             'KeyConditionExpression': 'list_key = :lk',
             'ExpressionAttributeValues': {':lk': self.LIST_KEY},
             'Limit': limit,
-            'ScanIndexForward': False,
         }
         exclusive_start_key = decode_cursor(cursor)
         if exclusive_start_key:
             kwargs['ExclusiveStartKey'] = exclusive_start_key
         response = await table.query(**kwargs)
-        items = response.get('Items', [])
+        items = sorted(response.get('Items', []), key=lambda j: j['created_at'], reverse=True)
         return items, encode_cursor(response.get('LastEvaluatedKey'))
 
     async def update_status(self, job_id: str, status: str):

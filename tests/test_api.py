@@ -84,6 +84,22 @@ def test_get_job_not_found_returns_404(client):
     assert response.status_code == 404
 
 
+def test_list_jobs_orders_by_created_at_not_random_job_id(client, make_csv, sample_lead):
+    # Regression test: list_all() used to sort by job_id (a random UUID,
+    # the table's sort key) descending, which has nothing to do with
+    # actual upload time. Uploading twice in sequence must always show
+    # the second upload before the first, regardless of what their
+    # random job_ids happen to sort to alphabetically.
+    first = client.post("/upload", files={"file": ("a.csv", make_csv([sample_lead]), "text/csv")}).json()
+    second_lead = dict(sample_lead)
+    second_lead["email"] = "second-upload@example.com"
+    second = client.post("/upload", files={"file": ("b.csv", make_csv([second_lead]), "text/csv")}).json()
+
+    jobs = client.get("/jobs").json()["jobs"]
+    job_ids_in_order = [j["job_id"] for j in jobs]
+    assert job_ids_in_order.index(second["job_id"]) < job_ids_in_order.index(first["job_id"])
+
+
 def test_list_jobs_includes_new_upload(client, make_csv, sample_lead):
     csv_bytes = make_csv([sample_lead])
     job_id = client.post("/upload", files={"file": ("leads.csv", csv_bytes, "text/csv")}).json()["job_id"]
